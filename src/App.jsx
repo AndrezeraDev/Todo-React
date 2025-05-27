@@ -34,12 +34,19 @@ function App() {
     setTasks(newTask)
   }
 
+  function onTaskDelete(taskId){
+    if(window.confirm("Tem certeza que deseja deletar essa tarefa?")){
+      const newTask = task.filter(task => task.id !== taskId)   //Filtrar as tarefas que nao serao deletadas, ou seja, as que serao mantidas usando o filter QUE SEJA DIFERENTE DO ID DA TAREFA QUE EU QUERO DELETAR
+      setTasks(newTask)                                         //Atualizar as tarefas que nao serao deletadas usando o setTasks
+    }
+  }
+
   return(
     <div className='w-screen h-screen bg-slate-500 flex justify-center p-6'>
       <div className='w-[500px]'>
         <h1 className='text-3xl text-slate-100 font-bold text-center'>Gerenciador de Tarefas</h1>
-        {/* <AddTask /> */}
-        <Tasks tasks={task} onTaskClick={onTaskClick}/>
+        <AddTask />
+        <Tasks tasks={task} onTaskClick={onTaskClick } onTaskDelete={onTaskDelete}/>
       </div>
     </div>
   )
