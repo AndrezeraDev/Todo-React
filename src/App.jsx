@@ -1,28 +1,12 @@
 import { useState } from 'react'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
+import {v4} from 'uuid'
 
 function App() {
 
 
-  const [task, setTasks] = useState([{
-    id: 1,
-    title: "Estudar Programação",
-    description: "Estudar programação durante o dia",
-    isCompleted: false
-  },
-  {
-    id: 2,
-    title: "Passear com o cachorro",
-    description: "Passear com o cachorro de manhã",
-    isCompleted: false
-  },
-  {
-    id: 3,
-    title: "Arrumar o quarto",
-    description: "Arrumar o meu quarto",
-    isCompleted: false
-  }])
+  const [task, setTasks] = useState([[]])
 
   function onTaskClick(taskId){
     const newTask = task.map(task => {
@@ -35,15 +19,15 @@ function App() {
   }
 
   function onTaskDelete(taskId){
-    if(window.confirm("Tem certeza que deseja deletar essa tarefa?")){
+    // if(window.confirm("Tem certeza que deseja deletar essa tarefa?")){
       const newTask = task.filter(task => task.id !== taskId)   //Filtrar as tarefas que nao serao deletadas, ou seja, as que serao mantidas usando o filter QUE SEJA DIFERENTE DO ID DA TAREFA QUE EU QUERO DELETAR
       setTasks(newTask)                                         //Atualizar as tarefas que nao serao deletadas usando o setTasks
-    }
+    // }
   }
 
   const onAddTaskSubmit = (title, description) => {
     const newTask = {
-      id: task.length + 1,
+      id: v4(),
       title,
       description,
       isCompleted: false
