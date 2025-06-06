@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import {v4} from 'uuid'
@@ -6,7 +6,9 @@ import {v4} from 'uuid'
 function App() {
 
 
-  const [task, setTasks] = useState([[]])
+  const [task, setTasks] = useState(
+    JSON.parse(localStorage.getItem('tasks')) || [] 
+  )
 
   function onTaskClick(taskId){
     const newTask = task.map(task => {
@@ -25,7 +27,7 @@ function App() {
     // }
   }
 
-  const onAddTaskSubmit = (title, description) => {
+  const onAddTaskSubmit = (title, description) => {  //Criar uma nova tarefa, ou seja um novo objeto com as informacoes da tarefa
     const newTask = {
       id: v4(),
       title,
@@ -35,6 +37,10 @@ function App() {
     setTasks([...task, newTask])
 
   }
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(task))
+  }, [task])
 
   return(
     <div className='w-screen h-screen bg-slate-500 flex justify-center p-6 '>
